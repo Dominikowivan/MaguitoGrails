@@ -15,7 +15,7 @@ class PersonajeSpec extends Specification implements DomainUnitTest<Personaje> {
     Item      unEscudoTorre
 
     def setup() {
-        unMaguito   = new Personaje(nombre:"maguito"     , pesoMaximo: 20, xp:30, vida:200)
+        unMaguito     = new Personaje(nombre:"maguito"     , pesoMaximo: 20, xp:30, vida:200)
         unBaculo      = new Item     (nombre: "baculo"     , peso: 10)
         unSombrero    = new Item     (nombre: "sombrero"   , peso: 5 )
         unEscudoTorre = new Item     (nombre: "escudoTorre", peso: 25)
@@ -35,7 +35,7 @@ class PersonajeSpec extends Specification implements DomainUnitTest<Personaje> {
 
         then:
             unMaguito.tieneEnSuInventario(unBaculo) == true
-            unBaculo.getDuenio()                      == unMaguito
+            unBaculo.getDuenio()                    == unMaguito
             unMaguito.getPesoActual()               == pesoEsperado
     }
 

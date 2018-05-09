@@ -9,7 +9,7 @@ class Item {
     Item() {
     }
 
-    static belongsTo = [duenio:Personaje]
+    static belongsTo = Personaje
 
     @Override
     String toString() {
@@ -19,5 +19,6 @@ class Item {
     static constraints = {
         nombre     nullable:false, blank:false, unique:true
         peso       nullable:false
+        duenio     nullable:true
     }
 }

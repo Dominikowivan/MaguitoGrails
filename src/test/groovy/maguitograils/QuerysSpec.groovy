@@ -40,21 +40,33 @@ class QuerysSpec extends HibernateSpec{
             unMaguito.getInventario().size()== elMismoMaguito.getInventario().size()
 
             //son el mismo objeto =)!
-            //no hay "perdida de identidad". Nunca se salio nunca de la sesion.
+            //no hay "perdida de identidad". Nunca se salio de la sesion.
             unMaguito == elMismoMaguito
     }
 
-    def "Se obtienen todos los objetos guardados"() {
+    def "Se guarda un objeto en cascada"() {
 
         given:
-            def items = [unBaculo, unSombrero, unEscudoTorre]
-            items.each{it.save()}
+            unMaguito.recoger(unBaculo)
+            unMaguito.save()
 
         when:
-            def itemsBuscados = Item.list()
+            Item elMismoBaculo = Item.findByNombre("baculo")
 
         then:
-            itemsBuscados.containsAll(items)
+            unBaculo.equals(elMismoBaculo)
+    }
+
+    def "Se guarda un objeto"() {
+
+        given:
+        unBaculo.save()
+
+        when:
+        Item elMismoBaculo = Item.findByNombre("baculo")
+
+        then:
+        unBaculo.equals(elMismoBaculo)
     }
 
     def "Se obtienen todos los objetos en el inventario del maguito"() {
@@ -72,5 +84,18 @@ class QuerysSpec extends HibernateSpec{
             itemsBuscados.contains(unEscudoTorre) == false
     }
 
+
+    def "Se obtienen todos los objetos guardados"() {
+
+        given:
+        def items = [unBaculo, unSombrero, unEscudoTorre]
+        items.each{it.save()}
+
+        when:
+        def itemsBuscados = Item.list()
+
+        then:
+        itemsBuscados.containsAll(items)
+    }
 
 }

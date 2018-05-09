@@ -2,8 +2,12 @@ package maguitograils
 
 import grails.gorm.transactions.Transactional
 import grails.rest.RestfulController
+import maguitograils.ApiAdapters.PersonajeApiAdapter
+import maguitograils.Exception.MuchoPesoException
 
 class PersonajeController extends RestfulController<Personaje> {
+
+    ItemService itemService
 
     //nota, si queres devolver varios Jsons en un response, lo haces de la siguiente manera:
     // respond  [unObjeto: Objeto.Query(), otroObjeto: OtroObjeto.Query2()]
@@ -12,38 +16,59 @@ class PersonajeController extends RestfulController<Personaje> {
 
     PersonajeController() {
         super(Personaje)
+        itemService = new ItemService()
     }
 
     // Http method: GET   uri: /personajes
-    // devuelve todos los personajes
+    // Utilizamos un apiAdapter por que de afuera no quiero enviar los items ni el pesoMaximo.
     def index(){
-        respond Personaje.list()
+        def personajes = Personaje.list().collect{ new PersonajeApiAdapter(it)}
+        respond personajes
     }
 
+
     // Http method: GET uri: /personajes/${id}
-    // Especificando un objeto de dominio como el parametro de la accion, grails va a buscar la instancia autmaticamente por el id
-    // Si no existe un objeto con esa ide, entonces devuelve 404
-     def show(Personaje unPersonaje) {
-        if(unPersonaje == null) {
-            render status:404
+    //
+    // En cualquiera de las acciones, si especificas como parametro un objeto de dominio, Grails asume que lo que esta recibiendo
+    // desde el get es una id, y va automaticamente a buscarlo por esa id.
+    // Si no existe un objeto con esa id, setea entonces ese parametro como null.
+
+    // Utilizamos un apiAdapter por que de afuera no quiero enviar los items ni el pesoMaximo.
+    def show(Personaje unPersonaje) {
+        if (unPersonaje == null) {
+            render status: 404
         }
         else {
-
-            respond unPersonaje
+            respond new PersonajeApiAdapter(unPersonaje)
         }
 
     }
 
     // Http method: POST uri: /personajes
-    // Guarda un personaje nuevo
+    // Guarda un personaje nuevo.
     @Transactional
     def save(Personaje unPersonaje) {
         if(unPersonaje.hasErrors()) {
             respond unPersonaje.errors
         }
         else {
-          unPersonaje.save()
+            unPersonaje.save()
         }
+    }
+
+    // Http method: Delete uri: /personajes/${id}
+    // Busca el personaje, y lo elimina
+    @Transactional
+    def delete() {
+        def personajeSolicitado = Personaje.get(params.id)
+        if(personajeSolicitado== null) {
+            render status: 404
+        }
+        else{
+            personajeSolicitado.delete()
+            render status: 200
+        }
+
     }
 
     // Http method: PUT uri: /personajes/${id}
@@ -55,37 +80,69 @@ class PersonajeController extends RestfulController<Personaje> {
             respond unPersonaje.errors
         }
 
-        Personaje personajeSolicitado = Personaje.findByNombre(unPersonaje.nombre)
+        if(unPersonaje == null) {
+            render status: 404
+        }
 
-        if(personajeSolicitado == null) {
-            render status: NOT_FOUND
+        else{
+            unPersonaje.save()
+            render status: 200
         }
-        else {
-            personajeSolicitado.setInventario(unPersonaje.getInventario())
-            personajeSolicitado.setVida      (unPersonaje.getVida()      )
-            personajeSolicitado.setXp        (unPersonaje.getXp()        )
-            personajeSolicitado.setPesoMaximo(unPersonaje.getPesoMaximo())
-        }
+
     }
 
-    // Http method: Delete uri: /personajes/${id}
-    // Busca el personaje, y lo elimina
+    // Http method: GET uri: /personajes/name/${alias}
+    //
+    // Accion definida en url mappings. El parametro que ponen despues de name/PARAMETRO lo guardas en la primera linea con params.alias
+    // si en el urlmapp le pusiste un nombre a ese parametro, tenes que usar ese nombre.
+    def showbyAlias() {
+        def unNombre = params.alias
+        def unPersonaje = Personaje.findByNombre(unNombre)
+
+        if (unPersonaje == null) {
+            render status: 433
+        }
+        else {
+            respond unPersonaje
+        }
+
+    }
+
+
+    // Http method: POST uri: /personajes/${id}/items
+    // Guarda un item nuevo en el Personaje
     @Transactional
-    def delete(Personaje unPersonaje) {
+    def agarrarItem(Item unItem) {
 
-        if(unPersonaje.hasErrors()) {
-            respond unPersonaje.errors
+        if(unItem.hasErrors()) {
+            respond unItem.errors
         }
 
-        Personaje personajeSolicitado = Personaje.findByNombre(unPersonaje.nombre)
-
-        if(personajeSolicitado == null) {
-            render status: NOT_FOUND
+        def personajeSolicitado = Personaje.get(params.id)
+        if(personajeSolicitado== null) {
+            render status: 404
         }
+
         else {
-            Personaje.deleteAll(personajeSolicitado)
+            try{ itemService.agarrarItem(personajeSolicitado,unItem) }
+            catch(MuchoPesoException e) {respond e.message  }
         }
     }
 
+    // Http method: POST uri: /personajes/${id}/itemDeBienvenida
+    // Genera un arma generica de bienvenida en el personaje
+    @Transactional
+    def nuevoEquipamiento() {
+
+        def personajeSolicitado = Personaje.get(params.id)
+        if(personajeSolicitado== null) {
+            render status: 404
+        }
+
+        else {
+            try{ itemService.equipoDeBienvenida(personajeSolicitado) }
+            catch(MuchoPesoException e) {respond e.message  }
+        }
+    }
 
 }

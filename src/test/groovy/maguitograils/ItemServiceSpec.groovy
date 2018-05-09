@@ -3,7 +3,7 @@ package maguitograils
 import grails.testing.services.ServiceUnitTest
 import spock.lang.Specification
 
-class PersonajeServiceSpec extends Specification implements ServiceUnitTest<PersonajeService>{
+class ItemServiceSpec extends Specification implements ServiceUnitTest<ItemService>{
 
     def setup() {
     }

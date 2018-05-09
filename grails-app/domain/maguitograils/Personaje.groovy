@@ -34,7 +34,6 @@ class Personaje {
 
     //Constructor
     Personaje() {
-
     }
 
     //Metodos
@@ -44,7 +43,7 @@ class Personaje {
             throw new MuchoPesoException(this, item)
         }
         item.setDuenio(this)
-        this.inventario.add(item)
+        inventario.add(item)
     }
 
     int getPesoActual() {
