@@ -7,7 +7,7 @@ import maguitograils.Exception.MuchoPesoException
 
 class PersonajeController extends RestfulController<Personaje> {
 
-    ItemService itemService
+    def itemService
 
     //nota, si queres devolver varios Jsons en un response, lo haces de la siguiente manera:
     // respond  [unObjeto: Objeto.Query(), otroObjeto: OtroObjeto.Query2()]
@@ -24,8 +24,7 @@ class PersonajeController extends RestfulController<Personaje> {
     // Http method: GET   uri: /personajes
     // Utilizamos un apiAdapter por que de afuera no quiero enviar los items ni el pesoMaximo.
     def index(){
-        def personajes = Personaje.list().collect{ new PersonajeApiAdapter(it)}
-        respond personajes
+        respond ( [personajes:Personaje.list()] )
     }
 
 
@@ -41,10 +40,7 @@ class PersonajeController extends RestfulController<Personaje> {
             render status: 404
         }
         else {
-
-            def personajeRender3 = render(template: "personaje", model: [personaje: unPersonaje])
-
-            respond personajeRender3
+            respond unPersonaje, view:'show'
         }
 
     }

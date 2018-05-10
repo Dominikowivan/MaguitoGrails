@@ -1,13 +1,13 @@
 import maguitograils.Personaje
 
 model {
-    Personaje unPersonaje
+    Personaje personaje
 }
 
 json {
-        nombre unPersonaje.getNombre()
-        xp     unPersonaje.getXp()
-        vida   unPersonaje.getVida()
+    nombre personaje.nombre
+    xp     personaje.xp
+    vida   personaje.vida
 
 }
 /* para agregar por ejemplo como me gustaria que muestre items, es cuestion de agregar dentro del json:
