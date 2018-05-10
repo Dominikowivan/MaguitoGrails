@@ -4,7 +4,7 @@ import grails.test.hibernate.HibernateSpec
 import grails.testing.services.ServiceUnitTest
 import spock.lang.Specification
 
-class QuerysSpec extends HibernateSpec{
+class TestingGroundSpec extends HibernateSpec{
 
     //Notese que la superclase es HibernateSpec, esto nos permite testear utilizando la base y abstraernos
     //De iniciar sesiones.
@@ -96,6 +96,29 @@ class QuerysSpec extends HibernateSpec{
 
         then:
         itemsBuscados.containsAll(items)
+    }
+
+    def "Se testea el uso de un mock"() {
+
+        given:
+            //Declaramos el mock
+            def mockPersonaje = Mock(Personaje)
+
+            //Declaramos que cuando recibe este mensaje, devuelve 5000
+            mockPersonaje.getPesoActual() >> 5000
+
+
+        when:
+
+            mockPersonaje.recoger(unBaculo)
+            mockPersonaje.recoger(unBaculo)
+
+        then:
+            //Como declaramos arriba, el metodo deveria devolver 5000
+            5000 == mockPersonaje.getPesoActual()
+            //Asi asertamos que el mensaje se recibio 2 veces
+            2 * mockPersonaje.recoger(unBaculo)
+
     }
 
 }

@@ -12,11 +12,13 @@ class PersonajeController extends RestfulController<Personaje> {
     //nota, si queres devolver varios Jsons en un response, lo haces de la siguiente manera:
     // respond  [unObjeto: Objeto.Query(), otroObjeto: OtroObjeto.Query2()]
 
+    // request.JSON te devuelve el json en el body de la request
+    // respond es lo que vos le devolves en el body
+
     static responseFormats = ['json']
 
     PersonajeController() {
         super(Personaje)
-        itemService = new ItemService()
     }
 
     // Http method: GET   uri: /personajes
@@ -90,6 +92,8 @@ class PersonajeController extends RestfulController<Personaje> {
         }
 
     }
+
+
 
     // Http method: GET uri: /personajes/name/${alias}
     //
