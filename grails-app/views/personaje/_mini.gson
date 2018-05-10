@@ -1,0 +1,10 @@
+import maguitograils.Personaje
+
+model {
+    Personaje personaje
+}
+
+json {
+    id  personaje.id
+    nombre  personaje.nombre
+}
