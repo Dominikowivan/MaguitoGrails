@@ -2,12 +2,12 @@ package maguitograils
 
 import grails.gorm.transactions.Transactional
 import grails.rest.RestfulController
-import maguitograils.ApiAdapters.PersonajeApiAdapter
 import maguitograils.Exception.MuchoPesoException
 
 class PersonajeController extends RestfulController<Personaje> {
 
     def itemService
+    def personajeService
 
     //nota, si queres devolver varios Jsons en un response, lo haces de la siguiente manera:
     // respond  [unObjeto: Objeto.Query(), otroObjeto: OtroObjeto.Query2()]
@@ -24,7 +24,7 @@ class PersonajeController extends RestfulController<Personaje> {
     // Http method: GET   uri: /personajes
     // Utilizamos un apiAdapter por que de afuera no quiero enviar los items ni el pesoMaximo.
     def index(){
-        respond ( [personajes:Personaje.list()] )
+        respond ( [personajesARenderear: personajeService.loadAllPersonajes()], view:'index' )
     }
 
 
@@ -40,9 +40,8 @@ class PersonajeController extends RestfulController<Personaje> {
             render status: 404
         }
         else {
-            respond unPersonaje, view:'show'
+            respond  ([unPersonajeARenderear: unPersonaje], view:'show')
         }
-
     }
 
     // Http method: POST uri: /personajes
@@ -50,7 +49,7 @@ class PersonajeController extends RestfulController<Personaje> {
     @Transactional
     def save(Personaje unPersonaje) {
         if(!tieneErrores(unPersonaje)){
-            unPersonaje.save()
+            personajeService.savePersonaje(unPersonaje)
         }
     }
 
@@ -58,12 +57,12 @@ class PersonajeController extends RestfulController<Personaje> {
     // Busca el personaje, y lo elimina
     @Transactional
     def delete() {
-        def personajeSolicitado = Personaje.get(params.id)
+        def personajeSolicitado = personajeService.loadPersonaje(params.id)
         if(personajeSolicitado== null) {
             render status: 404
         }
         else{
-            personajeSolicitado.delete()
+            personajeService.deletePersonaje(personajeSolicitado)
             render status: 200
         }
 
@@ -79,7 +78,7 @@ class PersonajeController extends RestfulController<Personaje> {
         }
 
         else if(! tieneErrores(unPersonaje)) {
-            unPersonaje.save()
+            personajeService.updatePersonaje(unPersonaje.save())
             render status: 200
         }
 
@@ -93,7 +92,7 @@ class PersonajeController extends RestfulController<Personaje> {
     // si en el urlmapp le pusiste un nombre a ese parametro, tenes que usar ese nombre.
     def showbyAlias() {
         def unNombre = params.alias
-        def unPersonaje = Personaje.findByNombre(unNombre)
+        def unPersonaje = personajeService.loadByNombre(unNombre)
 
         if (unPersonaje == null) {
             render status: 404
@@ -108,7 +107,7 @@ class PersonajeController extends RestfulController<Personaje> {
     // Guarda un item nuevo en el Personaje
     @Transactional
     def agarrarItem(Item unItem) {
-        def personajeSolicitado = Personaje.get(params.id)
+        def personajeSolicitado = personajeService.loadPersonaje(params.id)
 
         if (!tieneErrores(unItem) && personajeSolicitado != null ){
 
@@ -126,7 +125,7 @@ class PersonajeController extends RestfulController<Personaje> {
     @Transactional
     def nuevoEquipamiento() {
 
-        def personajeSolicitado = Personaje.get(params.id)
+        def personajeSolicitado = personajeService.loadPersonaje(params.id)
         if(personajeSolicitado== null) {
             render status: 404
         }

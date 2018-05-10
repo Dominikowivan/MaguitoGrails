@@ -1,7 +1,7 @@
 import maguitograils.Personaje
 
 model {
-    Personaje personaje
+    Personaje unPersonajeARenderear
 }
 
-json g.render(personaje)
+json tmpl.mini(unPersonajeARenderear)
