@@ -1,0 +1,7 @@
+import maguitograils.Personaje
+
+model {
+    Personaje personaje
+}
+
+json g.render(personaje)
