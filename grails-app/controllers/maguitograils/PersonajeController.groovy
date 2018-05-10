@@ -50,10 +50,7 @@ class PersonajeController extends RestfulController<Personaje> {
     // Guarda un personaje nuevo.
     @Transactional
     def save(Personaje unPersonaje) {
-        if(unPersonaje.hasErrors()) {
-            respond unPersonaje.errors
-        }
-        else {
+        if(!tieneErrores(unPersonaje)){
             unPersonaje.save()
         }
     }
@@ -78,15 +75,11 @@ class PersonajeController extends RestfulController<Personaje> {
     @Transactional
     def update(Personaje unPersonaje) {
 
-        if(unPersonaje.hasErrors()) {
-            respond unPersonaje.errors
-        }
-
         if(unPersonaje == null) {
             render status: 404
         }
 
-        else{
+        else if(! tieneErrores(unPersonaje)) {
             unPersonaje.save()
             render status: 200
         }
@@ -104,7 +97,7 @@ class PersonajeController extends RestfulController<Personaje> {
         def unPersonaje = Personaje.findByNombre(unNombre)
 
         if (unPersonaje == null) {
-            render status: 433
+            render status: 404
         }
         else {
             respond unPersonaje
@@ -112,24 +105,20 @@ class PersonajeController extends RestfulController<Personaje> {
 
     }
 
-
     // Http method: POST uri: /personajes/${id}/items
     // Guarda un item nuevo en el Personaje
     @Transactional
     def agarrarItem(Item unItem) {
-
-        if(unItem.hasErrors()) {
-            respond unItem.errors
-        }
-
         def personajeSolicitado = Personaje.get(params.id)
-        if(personajeSolicitado== null) {
-            render status: 404
-        }
 
-        else {
+        if (!tieneErrores(unItem) && personajeSolicitado != null ){
+
             try{ itemService.agarrarItem(personajeSolicitado,unItem) }
             catch(MuchoPesoException e) {respond e.message  }
+
+        }
+        else{
+            render status: 404
         }
     }
 
@@ -149,4 +138,13 @@ class PersonajeController extends RestfulController<Personaje> {
         }
     }
 
+    def tieneErrores(Object unObjeto){
+        def hayErrores = unObjeto.hasErrors()
+
+        if(hayErrores) {
+            respond unObjeto.errors
+        }
+
+        hayErrores
+    }
 }

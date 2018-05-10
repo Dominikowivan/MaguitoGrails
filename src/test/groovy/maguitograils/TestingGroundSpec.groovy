@@ -1,8 +1,7 @@
 package maguitograils
 
 import grails.test.hibernate.HibernateSpec
-import grails.testing.services.ServiceUnitTest
-import spock.lang.Specification
+
 
 class TestingGroundSpec extends HibernateSpec{
 
