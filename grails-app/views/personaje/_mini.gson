@@ -5,6 +5,16 @@ model {
 }
 
 json {
-    id  personaje.id
-    nombre  personaje.nombre
+    nombre personaje.nombre
+    xp     personaje.xp
+    vida   personaje.vida
+
 }
+/* para agregar por ejemplo como me gustaria que muestre items, es cuestion de agregar dentro del json:
+
+   items  tmpl.item(unPersonaje.getItems()
+
+   y definir el template de items.
+}
+
+*/

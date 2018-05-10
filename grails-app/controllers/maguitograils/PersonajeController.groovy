@@ -40,7 +40,7 @@ class PersonajeController extends RestfulController<Personaje> {
             render status: 404
         }
         else {
-            respond unPersonaje
+            respond unPersonaje, view:'show'
         }
 
     }
