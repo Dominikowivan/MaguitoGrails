@@ -41,7 +41,10 @@ class PersonajeController extends RestfulController<Personaje> {
             render status: 404
         }
         else {
-            respond new PersonajeApiAdapter(unPersonaje)
+
+            def personajeRender3 = render(template: "personaje", model: [personaje: unPersonaje])
+
+            respond personajeRender3
         }
 
     }

@@ -1,0 +1,15 @@
+import maguitograils.Personaje
+
+model {
+    Iterable<Personaje> listaDePersonaje
+}
+
+// tmlp.personaje lo que hace es decir: usame el template que tenes armado para personaje. Esta definido en _personaje.gson
+
+json tmpl.personaje(listaDePersonaje ?: [])
+
+// ?: es el operador 'Elvis' que quiere hace?   si el objeto de la izquierda es null, te devuelve el que esta a la derecha.
+// sino te devuelve el de la izquierda.
+
+// en este caso, se fija si la lista de personajes es null. Si lo es, te devuelve una lista vacia.
+

@@ -1,0 +1,20 @@
+import maguitograils.Personaje
+
+model {
+    Personaje unPersonaje
+}
+
+json {
+        nombre unPersonaje.getNombre()
+        xp     unPersonaje.getXp()
+        vida   unPersonaje.getVida()
+
+}
+/* para agregar por ejemplo como me gustaria que muestre items, es cuestion de agregar dentro del json:
+
+   items  tmpl.item(unPersonaje.getItems()
+
+   y definir el template de items.
+}
+
+*/
