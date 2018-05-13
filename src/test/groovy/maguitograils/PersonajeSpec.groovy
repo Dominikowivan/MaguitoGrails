@@ -23,16 +23,16 @@ class PersonajeSpec extends Specification implements DomainUnitTest<Personaje> {
 
 
     def "Un maguito recoge un item. Sabe que se encuentra en su inventario y su peso aumenta acorde al peso del item"() {
-
+        //Esto es el setup
         given:
             Integer pesoAntesDeRecogerItem = unMaguito.getPesoActual()
             Integer pesoDelBaculo          = unBaculo.getPeso()
             Integer pesoEsperado           = pesoDelBaculo + pesoAntesDeRecogerItem
-
+        //Excercise
         when:
             unMaguito.recoger(unBaculo)
 
-
+        //Assertion (then: o expect:)
         then:
             unMaguito.tieneEnSuInventario(unBaculo) == true
             unBaculo.getDuenio()                    == unMaguito
