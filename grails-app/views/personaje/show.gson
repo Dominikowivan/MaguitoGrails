@@ -1,0 +1,7 @@
+import maguitograils.Personaje
+
+model {
+    Personaje unPersonajeARenderear
+}
+
+json tmpl.mini(unPersonajeARenderear)

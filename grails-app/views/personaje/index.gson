@@ -1,0 +1,5 @@
+model {
+    List personajesARenderear
+}
+
+json tmpl.mini(personajesARenderear ?: [])
