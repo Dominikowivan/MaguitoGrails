@@ -2,6 +2,7 @@ package maguitograils
 
 class UrlMappings {
 
+    // mas info sobre url mappings en: http://docs.grails.org/latest/guide/theWebLayer.html#urlmappings
     static mappings = {
         delete "/$controller/$id(.$format)?"  (action:"delete")
         get    "/$controller(.$format)?"      (action:"index")

@@ -5,6 +5,8 @@ import grails.gorm.transactions.Transactional
 @Transactional
 class PersonajeService {
 
+    // Mas info sobre mensajes de persistencia:  //https://docs.grails.org/latest/ref/Domain%20Classes/Usage.html
+
     def loadAllPersonajes() {
         Personaje.list()
     }

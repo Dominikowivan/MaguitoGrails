@@ -97,6 +97,7 @@ class TestingGroundSpec extends HibernateSpec{
         itemsBuscados.containsAll(items)
     }
 
+    // Mas info sobre mocks en: http://spockframework.org/spock/docs/1.0/interaction_based_testing.html
     def "Se testea el uso de un mock"() {
 
         given:

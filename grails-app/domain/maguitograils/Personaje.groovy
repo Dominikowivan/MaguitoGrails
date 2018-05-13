@@ -16,6 +16,7 @@ class Personaje {
     //Mapeo
 
     //Se declaran las constrains con las que va a mapear los atributos a la tabla
+    //mas info sobre constraints: https://docs.grails.org/latest/ref/Constraints/Usage.html
     static constraints = {
         nombre     nullable:false, blank:false, maxSize:255, unique:true
         pesoMaximo nullable:false
@@ -30,7 +31,8 @@ class Personaje {
     //otros no usados:
     //static belongsTo = [nombreColaborador:ClaseColaborador]
     //static hasOne    = [nombreColaborador:ClaseColaborador]
-
+    // mas info sobre relaciones:
+    //https://docs.grails.org/latest/ref/Domain%20Classes/Usage.html
 
     //Constructor
     Personaje() {
