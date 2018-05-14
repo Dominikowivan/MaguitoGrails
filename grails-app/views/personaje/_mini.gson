@@ -5,8 +5,8 @@ model {
 }
 
 json {
-    nombre personaje.nombre
-    vida   personaje.vida
+    nombre personaje.name
+    vida   personaje.maxLife
     xp     personaje.xp
 
 }

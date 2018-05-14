@@ -14,7 +14,7 @@ class TestingGroundSpec extends HibernateSpec{
     Item          unEscudoTorre
 
     def setup() {
-        unMaguito     = new Personaje(nombre:"maguito"     , pesoMaximo: 20, xp:30, vida:200)
+        unMaguito     = new Personaje(name:"maguito"     , pesoMaximo: 20, xp:30, maxLife:200)
         unBaculo      = new Item     (nombre: "baculo"     , peso: 10)
         unSombrero    = new Item     (nombre: "sombrero"   , peso: 5 )
         unEscudoTorre = new Item     (nombre: "escudoTorre", peso: 25)
@@ -30,11 +30,11 @@ class TestingGroundSpec extends HibernateSpec{
             unMaguito.save()
 
         then:
-            Personaje elMismoMaguito = Personaje.findByNombre("maguito")
+            Personaje elMismoMaguito = Personaje.findByName("maguito")
 
-            unMaguito.getNombre()           == elMismoMaguito.getNombre()
+            unMaguito.getName()           == elMismoMaguito.getName()
             unMaguito.getPesoMaximo()       == elMismoMaguito.getPesoMaximo()
-            unMaguito.getVida()             == elMismoMaguito.getVida()
+            unMaguito.getMaxLife()             == elMismoMaguito.getMaxLife()
             unMaguito.getXp()               == elMismoMaguito.getXp()
             unMaguito.getInventario().size()== elMismoMaguito.getInventario().size()
 

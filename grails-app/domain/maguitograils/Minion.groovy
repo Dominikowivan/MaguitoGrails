@@ -2,11 +2,11 @@ package maguitograils
 
 class Minion extends Monster {
 
-    String          name
     Integer         gold
 
+    Minion() {}
 
-    static constraints ={}
+    static constraints ={gold nullable:false}
     def getMyMoney() {
         def result = gold
         gold = 0
@@ -19,5 +19,6 @@ class Minion extends Monster {
     def addGold(Integer aGold) {
         gold += aGold
     }
+
 }
 

@@ -1,20 +1,14 @@
 package maguitograils
 
-abstract class  Monster {
-
-    Integer         actualLife
-    Integer         maxLife
-    Coordinate      coordinate
+abstract class  Monster  extends Fighter{
 
     static constraints ={}
+    static hasOne    = [coordinate:Coordinate]
 
-    def getDamage(Integer aDamage) {actualLife -= aDamage}
 
     abstract def isWeary()
 
     def move(Coordinate aCoordinate){coordinate = aCoordinate}
 
-    def addGold(Integer aGold) {}
-
-
+    def addGold(Integer aGold){}
 }

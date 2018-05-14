@@ -7,6 +7,12 @@ class PersonajeService {
 
     // Mas info sobre mensajes de persistencia:  //https://docs.grails.org/latest/ref/Domain%20Classes/Usage.html
 
+    def combat(Fighter defiant, Fighter defender){
+        def combat          = new Battle()
+        def combatResult    = combat.start(defiant,defender)
+
+    }
+
     def loadAllPersonajes() {
         Personaje.list()
     }
@@ -28,6 +34,6 @@ class PersonajeService {
     }
 
     def loadByNombre(def unNombre) {
-        Personaje.findByNombre(unNombre)
+        Personaje.findByName(unNombre)
     }
 }

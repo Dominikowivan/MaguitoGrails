@@ -2,14 +2,13 @@ package maguitograils
 
 import maguitograils.Exception.MuchoPesoException
 
-class Personaje {
+class Personaje extends Fighter{
 
     //Estructura
 
-    String nombre
-    int    pesoMaximo
-    int    xp
-    int    vida
+    Integer     pesoMaximo
+    Integer     xp
+
 
     Set<Item> inventario = new HashSet<>()
 
@@ -18,18 +17,18 @@ class Personaje {
     //Se declaran las constrains con las que va a mapear los atributos a la tabla
     //mas info sobre constraints: https://docs.grails.org/latest/ref/Constraints/Usage.html
     static constraints = {
-        nombre     nullable:false, blank:false, maxSize:255, unique:true
-        pesoMaximo nullable:false
-        xp         nullable:false
-        vida       nullable:false
-
+        pesoMaximo      nullable:false
+        xp              nullable:false
     }
     //Cardinalidad de las relaciones
 
+    //oneToMany
     static hasMany = [inventario: Item]
 
     //otros no usados:
+    //
     //static belongsTo = [nombreColaborador:ClaseColaborador]
+    //oneToOne
     //static hasOne    = [nombreColaborador:ClaseColaborador]
     // mas info sobre relaciones:
     //https://docs.grails.org/latest/ref/Domain%20Classes/Usage.html
@@ -56,7 +55,7 @@ class Personaje {
 
     @Override
     String toString() {
-        this.nombre
+        this.name
     }
 
     boolean tieneEnSuInventario(Item unItem) {
