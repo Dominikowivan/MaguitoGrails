@@ -39,7 +39,7 @@ class PersonajeController extends RestfulController<Personaje> {
         if (unPersonaje == null) {
             render status: 404
         }
-        else {
+        else {def bajitossociation
             respond  ([unPersonajeARenderear: unPersonaje], view:'show')
         }
     }

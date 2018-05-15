@@ -7,7 +7,14 @@ class Dungeon {
     Integer             gold
     Coordinate          coordinate
 
-    static constraints = {}
+
+
+    static constraints = {
+        name        nullable:false, blank:false, unique:true
+        monsters    nullable:true
+        gold        nullable:false
+        coordinate  nullable:false
+    }
 
     int monstersWeary() {monsters.count {it.isWeary()}}
 
