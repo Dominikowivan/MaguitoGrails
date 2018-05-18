@@ -14,7 +14,7 @@ class TestingGroundSpec extends HibernateSpec{
     Item          unEscudoTorre
 
     def setup() {
-        unMaguito     = new Personaje(nombre:"maguito"     , pesoMaximo: 20, xp:30, vida:200)
+        unMaguito     = new Personaje(name:"maguito"     , pesoMaximo: 20, xp:30, actualLife:200)
         unBaculo      = new Item     (nombre: "baculo"     , peso: 10)
         unSombrero    = new Item     (nombre: "sombrero"   , peso: 5 )
         unEscudoTorre = new Item     (nombre: "escudoTorre", peso: 25)
@@ -26,15 +26,15 @@ class TestingGroundSpec extends HibernateSpec{
     def "Al guardar y luego recuperar se obtienen objetos similares"() {
 
         when:
-            unMaguito.recoger(unBaculo)
+            unMaguito.grab(unBaculo)
             unMaguito.save()
 
         then:
-            Personaje elMismoMaguito = Personaje.findByNombre("maguito")
+            Personaje elMismoMaguito = Personaje.findByName("maguito")
 
-            unMaguito.getNombre()           == elMismoMaguito.getNombre()
+            unMaguito.getName()           == elMismoMaguito.getName()
             unMaguito.getPesoMaximo()       == elMismoMaguito.getPesoMaximo()
-            unMaguito.getVida()             == elMismoMaguito.getVida()
+            unMaguito.getActualLife()             == elMismoMaguito.getActualLife()
             unMaguito.getXp()               == elMismoMaguito.getXp()
             unMaguito.getInventario().size()== elMismoMaguito.getInventario().size()
 
@@ -46,7 +46,7 @@ class TestingGroundSpec extends HibernateSpec{
     def "Se guarda un objeto en cascada"() {
 
         given:
-            unMaguito.recoger(unBaculo)
+            unMaguito.grab(unBaculo)
             unMaguito.save()
 
         when:
@@ -72,7 +72,7 @@ class TestingGroundSpec extends HibernateSpec{
 
         given:
             def items = [unBaculo, unSombrero]
-            items.each{unMaguito.recoger(it)}
+            items.each{unMaguito.grab(it)}
             unMaguito.save()
 
         when:
@@ -110,14 +110,14 @@ class TestingGroundSpec extends HibernateSpec{
 
         when:
 
-            mockPersonaje.recoger(unBaculo)
-            mockPersonaje.recoger(unBaculo)
+            mockPersonaje.grab(unBaculo)
+            mockPersonaje.grab(unBaculo)
 
         then:
             //Como declaramos arriba, el metodo deveria devolver 5000
             5000 == mockPersonaje.getPesoActual()
             //Asi asertamos que el mensaje se recibio 2 veces
-            2 * mockPersonaje.recoger(unBaculo)
+            2 * mockPersonaje.grab(unBaculo)
 
     }
 

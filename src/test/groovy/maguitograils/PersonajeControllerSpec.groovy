@@ -14,9 +14,9 @@ class PersonajeControllerSpec extends HibernateSpec implements ControllerUnitTes
     def             unJsonBuilder
 
     def setup(){
-        unMaguito    = new Personaje(nombre: 'maguito'     , pesoMaximo: 20, xp:30, vida:200)
-        unGuerrerito = new Personaje(nombre: 'guerrerito'  , pesoMaximo: 20, xp:30, vida:200)
-        unCleriguito = new Personaje(nombre: 'cleriguito'  , pesoMaximo: 20, xp:30, vida:200)
+        unMaguito    = new Personaje(name: 'maguito'     , pesoMaximo: 20, xp:30, actualLife:200)
+        unGuerrerito = new Personaje(name: 'guerrerito'  , pesoMaximo: 20, xp:30, actualLife:200)
+        unCleriguito = new Personaje(name: 'cleriguito'  , pesoMaximo: 20, xp:30, actualLife:200)
         unaListaDeLosPersonajes = [unMaguito,unGuerrerito,unCleriguito]
         unaListaDeLosPersonajes.each{ it.save()}
         unJsonBuilder= new JsonBuilder()
@@ -34,8 +34,8 @@ class PersonajeControllerSpec extends HibernateSpec implements ControllerUnitTes
             def elPersonaje = it
             def jsonBuilder = getUnJsonBuilder()
                 jsonBuilder{
-                nombre elPersonaje.getNombre()
-                vida   elPersonaje.getVida()
+                nombre elPersonaje.getName()
+                vida   elPersonaje.getActualLife()
                 xp     elPersonaje.getXp()
             }
         } as JSON
@@ -55,8 +55,8 @@ class PersonajeControllerSpec extends HibernateSpec implements ControllerUnitTes
         given:
             //Lo que esperamos que nos devuelva la accion Show es al personaje adaptado, como json
             def maguitoJson = unJsonBuilder{
-                    nombre unMaguito.getNombre()
-                    vida   unMaguito.getVida()
+                    nombre unMaguito.getName()
+                    vida   unMaguito.getActualLife()
                     xp     unMaguito.getXp()
             } as JSON
 
@@ -84,7 +84,7 @@ class PersonajeControllerSpec extends HibernateSpec implements ControllerUnitTes
 
     def 'Dado un personaje en el request, la accion Save lo guarda en la base de datos'() {
         given:
-            def unLadroncito = new Personaje(nombre: 'ladroncito', pesoMaximo: 20, xp:30, vida:200,
+            def unLadroncito = new Personaje(name: 'ladroncito', pesoMaximo: 20, xp:30, actualLife:200,
             maxLife: 20, baseDamage: 20, coordinate: new Coordinate(x: 2, y:6))
 
             def unLadroncitoJson = unLadroncito as JSON
@@ -97,7 +97,7 @@ class PersonajeControllerSpec extends HibernateSpec implements ControllerUnitTes
 
         then:
             response.status == 200
-            Personaje.findByNombre('ladroncito') != null
+            Personaje.findByName('ladroncito') != null
     }
 
     def 'Dado un id, la accion delete lo elimina de la base de datos'() {
@@ -146,7 +146,7 @@ class PersonajeControllerSpec extends HibernateSpec implements ControllerUnitTes
 
         then:
             response.status == 200
-            Personaje.get(unMaguitoId).getVida() == 3000
+            Personaje.get(unMaguitoId).getActualLife() == 3000
             Personaje.get(unMaguitoId).getXp()   == 5000
     }
 

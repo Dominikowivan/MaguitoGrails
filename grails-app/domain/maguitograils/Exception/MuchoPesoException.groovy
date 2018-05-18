@@ -15,7 +15,7 @@ class MuchoPesoException extends RuntimeException {
 
     @Override
     String getMessage() {
-        "El personaje [" + this.personaje + "] no puede recoger [" + this.item + "] porque carga mucho peso ya"
+        "El personaje [" + this.personaje + "] no puede grab [" + this.item + "] porque carga mucho peso ya"
     }
 
 }

@@ -13,11 +13,11 @@ class Battle {
         def attacker = aDefiant
         def damaged  = aDefender
 
-        while(aDefiant.vida != 0 && aDefender.vida !=0) {
-            damaged.getDamage(attacker.attack())
+        while(aDefiant.actualLife != 0 && aDefender.actualLife !=0) {
+            attacker.attackTo(damaged)
 
-            def turnFighter = new Turn(attackerName: attacker.nombre, damagedName: damaged.nombre,
-                    attackerLife: attacker.vida, damagedLife: damaged.vida)
+            def turnFighter = new Turn(attackerName: attacker.name, damagedName: damaged.name,
+                    attackerLife: attacker.actualLife, damagedLife: damaged.actualLife)
             combatResult.add(turnFighter)
 
             def change = attacker

@@ -15,7 +15,7 @@ class PersonajeSpec extends Specification implements DomainUnitTest<Personaje> {
     Item      unEscudoTorre
 
     def setup() {
-        unMaguito     = new Personaje(nombre:"maguito"     , pesoMaximo: 20, xp:30, vida:200)
+        unMaguito     = new Personaje(name:"maguito"     , pesoMaximo: 20, xp:30, actualLife:200)
         unBaculo      = new Item     (nombre: "baculo"     , peso: 10)
         unSombrero    = new Item     (nombre: "sombrero"   , peso: 5 )
         unEscudoTorre = new Item     (nombre: "escudoTorre", peso: 25)
@@ -30,7 +30,7 @@ class PersonajeSpec extends Specification implements DomainUnitTest<Personaje> {
             Integer pesoEsperado           = pesoDelBaculo + pesoAntesDeRecogerItem
         //Excercise
         when:
-            unMaguito.recoger(unBaculo)
+            unMaguito.grab(unBaculo)
 
         //Assertion (then: o expect:)
         then:
@@ -44,7 +44,7 @@ class PersonajeSpec extends Specification implements DomainUnitTest<Personaje> {
             Integer pesoAntesDeRecogerItem = unMaguito.getPesoActual()
 
         when:
-            unMaguito.recoger(unEscudoTorre)
+            unMaguito.grab(unEscudoTorre)
 
         then:
             thrown(MuchoPesoException)

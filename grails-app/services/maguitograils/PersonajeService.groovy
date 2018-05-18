@@ -25,7 +25,7 @@ class PersonajeService {
     }
 
     def move(Personaje unPersonaje, Coordinate unaCoordenada) {
-        def personaje = loadByNombre(unPersonaje.nombre)
+        def personaje = loadByNombre(unPersonaje.name)
         personaje.coordinate = unaCoordenada
         updatePersonaje(personaje)
     }
@@ -51,6 +51,6 @@ class PersonajeService {
     }
 
     def loadByNombre(def unNombre) {
-        Personaje.findByNombre(unNombre)
+        Personaje.findByName(unNombre)
     }
 }

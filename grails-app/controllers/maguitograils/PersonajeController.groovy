@@ -89,7 +89,7 @@ class PersonajeController extends RestfulController<Personaje> {
     // Http method: GET uri: /personajes/name/${alias}
     //
     // Accion definida en url mappings. El parametro que ponen despues de name/PARAMETRO lo guardas en la primera linea con params.alias
-    // si en el urlmapp le pusiste un nombre a ese parametro, tenes que usar ese nombre.
+    // si en el urlmapp le pusiste un name a ese parametro, tenes que usar ese name.
     def showbyAlias() {
         def unNombre = params.alias
         def unPersonaje = personajeService.loadByNombre(unNombre)

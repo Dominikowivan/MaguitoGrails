@@ -14,7 +14,7 @@ class TheyArentInTheSameCoordinateException extends RuntimeException {
 
     @Override
     String getMessage() {
-        personaje1.nombre + " y " + personaje2.nombre + " no estan en la misma coordenada"
+        personaje1.name + " y " + personaje2.name + " no estan en la misma coordenada"
     }
 
 }

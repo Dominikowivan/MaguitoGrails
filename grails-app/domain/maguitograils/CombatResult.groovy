@@ -13,7 +13,7 @@ class CombatResult {
     }
 
     def winner(Personaje aPlayer, Personaje otherPlayer) {
-        if(aPlayer.vida > otherPlayer.vida){
+        if(aPlayer.actualLife > otherPlayer.actualLife){
             winner = aPlayer
         }
         winner = otherPlayer

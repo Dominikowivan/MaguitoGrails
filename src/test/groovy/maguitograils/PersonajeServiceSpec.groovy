@@ -11,8 +11,8 @@ class PersonajeServiceSpec extends HibernateSpec implements ServiceUnitTest<Pers
     PersonajeService ps
 
     def setup(){
-        personaje1  = new Personaje(nombre:"a", pesoMaximo: 20, xp:30, vida:200, baseDamage: 100, coordinate: new Coordinate(x:1, y:1))
-        personaje2  = new Personaje(nombre:"b", pesoMaximo: 20, xp:30, vida:200, baseDamage: 100, coordinate: new Coordinate(x:2, y:2))
+        personaje1  = new Personaje(name:"a", pesoMaximo: 20, xp:30, actualLife:200, baseDamage: 100, coordinate: new Coordinate(x:1, y:1))
+        personaje2  = new Personaje(name:"b", pesoMaximo: 20, xp:30, actualLife:200, baseDamage: 100, coordinate: new Coordinate(x:2, y:2))
         ps          = new PersonajeService()
     }
 
@@ -25,10 +25,10 @@ class PersonajeServiceSpec extends HibernateSpec implements ServiceUnitTest<Pers
             def combatResult = ps.combat(personaje1, personaje2)
 
         then:
-            def p1 = ps.loadByNombre(personaje1.nombre)
-            def p2 = ps.loadByNombre(personaje2.nombre)
-            p1.vida == 100
-            p2.vida == 0
+            def p1 = ps.loadByNombre(personaje1.name)
+            def p2 = ps.loadByNombre(personaje2.name)
+            p1.actualLife == 100
+            p2.actualLife == 0
             combatResult.turns.size() == 3
             combatResult.winner == personaje1
     }
@@ -52,14 +52,14 @@ class PersonajeServiceSpec extends HibernateSpec implements ServiceUnitTest<Pers
             def newCoordinate = new Coordinate(x: 6, y: 6)
 
         expect:
-            def aPlayer = ps.loadByNombre(personaje1.nombre)
+            def aPlayer = ps.loadByNombre(personaje1.name)
             aPlayer.coordinate.isEquals(personaje1.coordinate)
 
         when:
             ps.move(personaje1, newCoordinate)
 
         then:
-            def player = ps.loadByNombre(personaje1.nombre)
+            def player = ps.loadByNombre(personaje1.name)
             player.coordinate.isEquals(newCoordinate)
     }
 
