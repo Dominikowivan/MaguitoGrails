@@ -1,13 +1,13 @@
 package maguitograils.Exception
 
-import maguitograils.Personaje
+import maguitograils.Fighter
 
 class TheyArentInTheSameCoordinateException extends RuntimeException {
 
-    private Personaje personaje1
-    private Personaje personaje2
+    private Fighter personaje1
+    private Fighter personaje2
 
-    TheyArentInTheSameCoordinateException(Personaje unPersonaje1, Personaje unPersonaje2) {
+    TheyArentInTheSameCoordinateException(Fighter unPersonaje1, Fighter unPersonaje2) {
         personaje1 = unPersonaje1
         personaje2 = unPersonaje2
     }

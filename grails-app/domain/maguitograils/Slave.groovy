@@ -10,6 +10,4 @@ class Slave  extends  Monster {
         true
     }
 
-    @Override
-    def addGold(Integer aGold){}
 }

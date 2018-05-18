@@ -6,7 +6,7 @@ class Battle {
 
     Battle(){}
 
-    def start(Personaje aDefiant, Personaje aDefender) {
+    def start(Fighter aDefiant, Fighter aDefender) {
 
         def combatResult = new CombatResult()
 

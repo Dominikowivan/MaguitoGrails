@@ -6,6 +6,7 @@ abstract class Fighter {
     int        actualLife
     int        maxLife
     int        baseDamage
+    int        gold
     Coordinate coordinate = new Coordinate(x: 0, y: 0)
 
     static constraints = {
@@ -13,6 +14,7 @@ abstract class Fighter {
         actualLife nullable:false
         maxLife    nullable:false
         baseDamage nullable:false
+        gold       nullable:false
         coordinate nullable:false
     }
 
@@ -26,5 +28,17 @@ abstract class Fighter {
         baseDamage
     }
 
-    def getDamage(int aDamage) {actualLife -= aDamage}
+    def getDamage(int aDamage) {
+        actualLife -= Math.min(aDamage, actualLife)
+    }
+
+    def getMyMoney() {
+        def result = gold
+        gold = 0
+        result
+    }
+
+    def addGold(int aGold) {
+        gold += aGold
+    }
 }

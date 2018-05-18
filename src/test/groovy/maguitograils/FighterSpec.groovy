@@ -11,9 +11,8 @@ class FighterSpec extends Specification implements DomainUnitTest<Fighter> {
 
     def setup() {
         player1  = new Personaje(name:"a", pesoMaximo: 20, xp:30, actualLife:200, baseDamage: 100, coordinate: new Coordinate(x:1, y:1))
-        player2  = new Personaje(name:"a", pesoMaximo: 20, xp:30, actualLife:200, baseDamage: 100, coordinate: new Coordinate(x:1, y:1))
-        monster  = new Minion(name:"Charangito", actualLife: 300, gold:100, maxLife: 300, coordinate: new Coordinate(x:0,y:0))
-
+        player2  = new Personaje(name:"b", pesoMaximo: 20, xp:30, actualLife:200, baseDamage: 100, coordinate: new Coordinate(x:1, y:1))
+        monster  = new Minion(   name:"m", actualLife: 300, gold:100, maxLife: 300, baseDamage: 10, coordinate: new Coordinate(x:0,y:0))
     }
 
     def cleanup() {
@@ -29,20 +28,31 @@ class FighterSpec extends Specification implements DomainUnitTest<Fighter> {
             monster.actualLife == 200
     }
 
-/*
-1 personaje debe poder atacar a otro personaje o monstruo, realizando como daño su
-ataque base + el daño adicional que le proporciona su arma
+    def "A monster attacks to other monster and to a player"() {
+        when:
+            monster.attackTo(player1)
+            monster.attackTo(monster)
 
-1 monstruo también debe poder atacar a otro monstruo o personaje, realizando como
-daño su ataque base.
+        then:
+            player1.actualLife == 190
+            monster.actualLife == 290
+    }
 
-1 monstruo que está abatido, hace la mitad de daño del que haría normalmente.
+    def "A weary monster attacks to a player"() {
+        when:
+            monster.getDamage(200)
+            monster.attackTo(player1)
 
+        then:
+            player1.actualLife == 195
+    }
+
+/* To do:
 Cuando un Elite queda abatido, invoca 3 monstruos tipo minion con 1⁄4 de su vida
 máxima y 1⁄3 de su ataque base para que realicen un ataque contra el agresor. Esos
 monstruos pasan a ser parte del dungeon.
 
-T odo monstruo combatiendo en un dungeon al que pertenece obtiene 1 de daño extra
+T_odo monstruo combatiendo en un dungeon al que pertenece obtiene 1 de daño extra
 por cada ítem en la tesorería.
 
 Cada vez que un personaje derrota un monstruo, aumenta su experiencia: si el

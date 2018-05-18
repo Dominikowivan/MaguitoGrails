@@ -3,7 +3,7 @@ package maguitograils
 class CombatResult {
 
     List<Turn> turns = []
-    Personaje winner
+    Fighter winner
 
     static constraints = {
     }
@@ -12,10 +12,14 @@ class CombatResult {
         turns.add(turn)
     }
 
-    def winner(Personaje aPlayer, Personaje otherPlayer) {
+    def winner(Fighter aPlayer, Fighter otherPlayer) {
         if(aPlayer.actualLife > otherPlayer.actualLife){
             winner = aPlayer
         }
         winner = otherPlayer
+    }
+
+    def isTheWinner(Fighter player) {
+        winner.name == player.name
     }
 }

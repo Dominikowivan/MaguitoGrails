@@ -4,8 +4,16 @@ class Monster extends Fighter {
 
     static constraints ={}
 
-    def isWeary(){}
+    def isWeary(){
+        (maxLife / 2) >= actualLife
+    }
 
-    def addGold(Integer aGold) {}
+    @Override
+    def attackTo(Fighter aFighter) {
+        if(isWeary()) aFighter.getDamage(attack() / 2 as int)
+        else super.attackTo(aFighter)
+    }
+
+
 
 }

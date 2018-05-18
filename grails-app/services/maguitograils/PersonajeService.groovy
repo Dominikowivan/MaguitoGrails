@@ -8,7 +8,7 @@ class PersonajeService {
 
     // Mas info sobre mensajes de persistencia:  //https://docs.grails.org/latest/ref/Domain%20Classes/Usage.html
 
-    def combat(Personaje defiant, Personaje defender) {
+    def combat(Fighter defiant, Fighter defender) {
         if(theyAreInTheSameCoordinate(defiant, defender)){
             throw new TheyArentInTheSameCoordinateException(defiant, defender)
         }
@@ -20,7 +20,7 @@ class PersonajeService {
         combatResult
     }
 
-    def theyAreInTheSameCoordinate(Personaje personaje1, Personaje personaje2) {
+    def theyAreInTheSameCoordinate(Fighter personaje1, Fighter personaje2) {
         personaje1.coordinate.isEquals(personaje2.coordinate)
     }
 
@@ -29,6 +29,29 @@ class PersonajeService {
         personaje.coordinate = unaCoordenada
         updatePersonaje(personaje)
     }
+
+    def exploreDungeon(Fighter player, Dungeon dungeon) {
+        def dungeonResult = dungeon.monsters.collect {
+            combat(player, it)
+        }
+        def expeditionResult = new ExpeditionResult(dungeonResult)
+        if(expeditionResult.isTheWinner(player)){
+            dungeon.giveVictory(player)
+        } else {
+            dungeon.getVictory(player)
+        }
+        updatePersonaje(player)
+        dungeon.save()
+        expeditionResult
+    }/*
+    explorarDugeon(player1, combatiente):ResultadoDeExpedicion​ Envia un
+personaje a conquistar un dungeon. El personaje deberá combatir y vencer a
+todos los monstruos de ese dungeon. Si lo hace, se queda con t_odo el oro e
+items de los monstruos y de la tesorería del dungeon. Si pierde, el dungeon se
+queda con todos los items y oro del personaje y los agrega a la tesorería. El
+objeto resultante ResultadoDeExpedicion informará no sólo quien ganó, sino
+todos los resultados de los combates llevados a cabo.
+     */
 
     def loadAllPersonajes() {
         Personaje.list()
@@ -46,11 +69,13 @@ class PersonajeService {
         unPersonaje.delete()
     }
 
-    def updatePersonaje(Personaje unPersonaje) {
+    def updatePersonaje(Fighter unPersonaje) {
         unPersonaje.save()
     }
 
-    def loadByNombre(def unNombre) {
+    def loadByNombre(String unNombre) {
         Personaje.findByName(unNombre)
     }
+
+
 }
