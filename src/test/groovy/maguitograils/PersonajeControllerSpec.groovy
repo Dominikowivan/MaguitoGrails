@@ -84,7 +84,9 @@ class PersonajeControllerSpec extends HibernateSpec implements ControllerUnitTes
 
     def 'Dado un personaje en el request, la accion Save lo guarda en la base de datos'() {
         given:
-            def unLadroncito = new Personaje(nombre: 'ladroncito'     , pesoMaximo: 20, xp:30, vida:200)
+            def unLadroncito = new Personaje(nombre: 'ladroncito', pesoMaximo: 20, xp:30, vida:200,
+            maxLife: 20, baseDamage: 20, coordinate: new Coordinate(x: 2, y:6))
+
             def unLadroncitoJson = unLadroncito as JSON
 
             request.setJSON(unLadroncitoJson)

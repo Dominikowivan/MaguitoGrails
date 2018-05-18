@@ -5,11 +5,9 @@ class Coordinate {
     Integer y
 
 
+    boolean isEquals(Coordinate aCoordinate) {
 
-    @Override
-    boolean equals(def o) {
-
-        o.x == x && o.y == y
+        aCoordinate.x == x && aCoordinate.y == y
     }
 
 

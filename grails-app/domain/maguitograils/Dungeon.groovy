@@ -7,8 +7,6 @@ class Dungeon {
     Integer             gold
     Coordinate          coordinate
 
-
-
     static constraints = {
         name        nullable:false, blank:false, unique:true
         monsters    nullable:true

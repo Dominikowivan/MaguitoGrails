@@ -10,6 +10,9 @@ class Personaje {
     int    pesoMaximo
     int    xp
     int    vida
+    int    maxLife
+    int    baseDamage
+    Coordinate coordinate = new Coordinate(x:0, y:0)
 
     Set<Item> inventario = new HashSet<>()
 
@@ -22,7 +25,9 @@ class Personaje {
         pesoMaximo nullable:false
         xp         nullable:false
         vida       nullable:false
-
+        maxLife    nullable:false
+        baseDamage nullable:false
+        coordinate nullable: false
     }
     //Cardinalidad de las relaciones
 
@@ -62,4 +67,9 @@ class Personaje {
     boolean tieneEnSuInventario(Item unItem) {
         inventario.contains(unItem)
     }
+
+    def attack(){
+        baseDamage
+    }
+    def getDamage(int aDamage) {vida -= aDamage}
 }

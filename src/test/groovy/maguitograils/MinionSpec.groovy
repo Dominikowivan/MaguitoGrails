@@ -35,9 +35,9 @@ class MinionSpec extends Specification implements DomainUnitTest<Minion> {
     }
 
     void "un monstruo que inicialmente estaba en la cordenada x=0 y=0 se desplaza a la cordenada x=10y=20"(){
-        expect: charango.coordinate == new Coordinate(x:0,y:0)
+        expect: charango.coordinate.isEquals(new Coordinate(x:0,y:0))
         when:   charango.move(new Coordinate(x:10,y:20))
-        then:   charango.coordinate == new Coordinate(x:10,y:20)
+        then:   charango.coordinate.isEquals(new Coordinate(x:10,y:20))
     }
 
 
