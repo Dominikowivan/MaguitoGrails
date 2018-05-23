@@ -102,7 +102,7 @@ class TestingGroundSpec extends HibernateSpec{
 
         given:
             //Declaramos el mock
-            def mockPersonaje = Mock(Personaje)
+            Personaje mockPersonaje = Mock(Personaje)
 
             //Declaramos que cuando recibe este mensaje, devuelve 5000
             mockPersonaje.getPesoActual() >> 5000

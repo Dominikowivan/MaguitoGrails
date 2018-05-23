@@ -27,6 +27,29 @@ class PersonajeControllerSpec extends HibernateSpec implements ControllerUnitTes
 
     }
 
+    def 'teandoElRegistrar'() {
+        given:
+
+        def jsonpepon = unJsonBuilder {
+            userName  "Diego"
+            password "122"
+            rol "Aventurero"
+        } as JSON
+
+        // se podria poner lo siguiente request.setMethod("GET")
+        // pero no hace falta ya que es el metodo default en un request
+        request.setJSON(jsonpepon)
+        request.setMethod("POST")
+
+        when:
+        controller.registrarUsuario()
+
+        then:
+        response.status == 200
+
+    }
+
+
     def 'la accion index devuelve la lista de los personajes creados'() {
         given:
 
@@ -84,8 +107,11 @@ class PersonajeControllerSpec extends HibernateSpec implements ControllerUnitTes
 
     def 'Dado un personaje en el request, la accion Save lo guarda en la base de datos'() {
         given:
-            def unLadroncito = new Personaje(nombre: 'ladroncito'     , pesoMaximo: 20, xp:30, vida:200)
-            def unLadroncitoJson = unLadroncito as JSON
+            def unLadroncitoJson =  unJsonBuilder{
+            nombre 'ladroncito'
+            vida   200
+            xp     30
+        } as JSON
 
             request.setJSON(unLadroncitoJson)
             request.setMethod("POST")

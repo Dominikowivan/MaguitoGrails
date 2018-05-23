@@ -1,6 +1,7 @@
 package maguitograils
 
 import maguitograils.Exception.MuchoPesoException
+import myapp.User
 
 class Personaje {
 
@@ -10,6 +11,7 @@ class Personaje {
     int    pesoMaximo
     int    xp
     int    vida
+    long duenioID
 
     Set<Item> inventario = new HashSet<>()
 
@@ -22,6 +24,7 @@ class Personaje {
         pesoMaximo nullable:false
         xp         nullable:false
         vida       nullable:false
+        duenioID     nullable:true
 
     }
     //Cardinalidad de las relaciones
