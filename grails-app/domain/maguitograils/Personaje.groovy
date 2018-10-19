@@ -3,6 +3,7 @@ package maguitograils
 import maguitograils.Exception.MuchoPesoException
 import myapp.User
 
+
 class Personaje {
 
     //Estructura
@@ -11,22 +12,15 @@ class Personaje {
     int    pesoMaximo
     int    xp
     int    vida
-    long duenioID
 
     Set<Item> inventario = new HashSet<>()
 
     //Mapeo
 
+
     //Se declaran las constrains con las que va a mapear los atributos a la tabla
     //mas info sobre constraints: https://docs.grails.org/latest/ref/Constraints/Usage.html
-    static constraints = {
-        nombre     nullable:false, blank:false, maxSize:255, unique:true
-        pesoMaximo nullable:false
-        xp         nullable:false
-        vida       nullable:false
-        duenioID     nullable:true
 
-    }
     //Cardinalidad de las relaciones
 
     static hasMany = [inventario: Item]

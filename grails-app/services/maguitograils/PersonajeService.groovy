@@ -15,8 +15,8 @@ class PersonajeService {
         unPersonaje.save()
     }
 
-    def loadPersonaje(def p) {
-        Personaje.get(p)
+    def loadPersonaje(def personajeID) {
+        Personaje.get(personajeID)
     }
 
     def deletePersonaje(Personaje unPersonaje) {
@@ -29,5 +29,6 @@ class PersonajeService {
 
     def loadByNombre(def unNombre) {
         Personaje.findByNombre(unNombre)
+
     }
 }

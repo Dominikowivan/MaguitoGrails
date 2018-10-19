@@ -5,31 +5,30 @@ import grails.test.hibernate.HibernateSpec
 
 class TestingGroundSpec extends HibernateSpec{
 
-    //Notese que la superclase es HibernateSpec, esto nos permite testear utilizando la base y abstraernos
-    //De iniciar sesiones.
+            //Notese que la superclase es HibernateSpec, esto nos permite testear utilizando la base y abstraernos
+            //De iniciar sesiones.
 
-    Personaje     unMaguito
-    Item          unBaculo
-    Item          unSombrero
-    Item          unEscudoTorre
+            Personaje     unMaguito
+            Item          unBaculo
+            Item          unSombrero
+            Item          unEscudoTorre
 
-    def setup() {
-        unMaguito     = new Personaje(nombre:"maguito"     , pesoMaximo: 20, xp:30, vida:200)
-        unBaculo      = new Item     (nombre: "baculo"     , peso: 10)
-        unSombrero    = new Item     (nombre: "sombrero"   , peso: 5 )
-        unEscudoTorre = new Item     (nombre: "escudoTorre", peso: 25)
-    }
+        def setup() {
+            unMaguito     = new Personaje(nombre:"maguito"     , pesoMaximo: 20, xp:30, vida:200)
+            unBaculo      = new Item     (nombre: "baculo"     , peso: 10)
+            unSombrero    = new Item     (nombre: "sombrero"   , peso: 5 )
+            unEscudoTorre = new Item     (nombre: "escudoTorre", peso: 25)
+        }
 
-    def cleanup() {
-    }
 
-    def "Al guardar y luego recuperar se obtienen objetos similares"() {
 
-        when:
+        def "Al guardar y luego recuperar se obtienen objetos similares"() {
+
+            when:
             unMaguito.recoger(unBaculo)
             unMaguito.save()
 
-        then:
+            then:
             Personaje elMismoMaguito = Personaje.findByNombre("maguito")
 
             unMaguito.getNombre()           == elMismoMaguito.getNombre()
@@ -50,7 +49,7 @@ class TestingGroundSpec extends HibernateSpec{
             unMaguito.save()
 
         when:
-            Item elMismoBaculo = Item.findByNombre("baculo")
+            Item elMismoBaculo = Item.findByPeso(10)
 
         then:
             unBaculo.equals(elMismoBaculo)
